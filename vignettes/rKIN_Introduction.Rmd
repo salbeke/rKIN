@@ -1,0 +1,109 @@
+---
+title: "Introduction to rKIN (Kernel Isotope Niche)"
+author: "Shannon E. Albeke"
+date: "January 16, 2017"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+## rKIN Introduction and Guide
+This user manual introduces the basic functionality of the rKIN package. rKIN applies methods used to estimate animal homerange, but instead of geospatial coordinates, we use isotopic coordinates. The idea is straight forward, use spatial analyses tools in an unprojected space, in this case Isotope Niche space. The creation of this package relies on functions found in [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html), [MASS](https://cran.r-project.org/web/packages/MASS/), [raster](https://cran.r-project.org/web/packages/raster/index.html), [rgeos](https://cran.r-project.org/web/packages/rgeos/index.html) and [sp](https://cran.r-project.org/web/packages/sp/index.html) packages (you may also need the 'maptools' package). The estimation methods
+include: 1) 2-dimensional bivariate normal kernel utilization density estimator (estKIN), 2) bivariate normal ellipse estimator (estEllipse), and 3) minimum convex polygon estimator (estMCP), all applied to stable isotope data (simply x and y coordinates of the same scale). Additionally, functions to determine niche area (getArea), polygon overlap between groups and levels (confidence contours; calcOverlap) and plotting capabilities (plot.kin).
+
+## Example: Kernel UD
+The estKIN function uses the following workflow to estimate 2-D Bivariate Normal Kernel Utilization estimates:
+1) Obtain the min/max X and Y values and expand the extent of values by the 'scaler'. These values are then used to create a lattice/matrix of points for which the kernel will be estimated to.
+2) Using MASS::kde2d and the default bandwidth, fit the kernel to each 'group' individually.
+3) For each 'group', obtain the threshold values for each 'level' and extract the contourlines. 
+4) Convert the Lines to a SpatialPolygonsDataFrame (sp package) and attribute with ShapeArea
+5) Function returns an object of class("estObj"), which is a list of SpatialPolygonsDataFrames, 1 list item for each group.
+
+Below is an example:
+
+```
+library(rKIN)
+# read in example data. Data contain 2 species, a habitat class and C/N values
+data("rodents")
+head(rodents)
+# estimate niche overlap between 2 species using kernel UD and 3 confidence intervals
+test.kin<- estKIN(data=rodents, x="Ave_C", y="Ave_N", group="Species", 
+                  levels=c(50, 75, 95), scaler=2)
+# Extract the area of each polygon
+kin.area<- getArea(test.kin)
+kin.area
+# determine polygon overlap for all polygons
+kin.olp<- calcOverlap(test.kin)
+kin.olp
+# plot the kernel estimates
+plotKIN(test.kin, title="Test Kernel UD", x="Ave_C", y="Ave_N")
+```
+
+## Example: Bivariate Ellipse
+The estEllipse function uses the following workflow to estimate Bivariate Normal Ellipse estimates:
+1) For each 'group', estimate the centroid of the set of points and obtain the covariance of the xy coordinates pairs.
+2) For each 'level', estimate the radius of a circle given the variance and a chi-square cutoff threshold.
+3) Using the genCircle function from [SIBER](https://cran.r-project.org/web/packages/SIBER/index.html) package, create the xy coordinate pairs to create the ellipse.
+4) Convert the points to a SpatialPolygonsDataFrame (sp package) and attribute with ShapeArea
+5) Function returns an object of class("estObj"), which is a list of SpatialPolygonsDataFrames, 1 list item for each 'group'.
+
+Below is an example:
+
+```
+library(rKIN)
+# read in example data. Data contain 2 species, a habitat class and C/N values
+data("rodents")
+head(rodents)
+# estimate niche overlap between 2 species using kernel UD and 3 confidence intervals
+test.elp<- estEllipse(data=rodents, x="Ave_C", y="Ave_N", group="Species", levels=c(50, 75, 95))
+# Extract the area of each polygon
+elp.area<- getArea(test.elp)
+elp.area
+# determine polygon overlap for all polygons
+elp.olp<- calcOverlap(test.elp)
+elp.olp
+# plot the kernel estimates
+plotKIN(test.elp, title="Test Bivariate Ellipse", x="Ave_C", y="Ave_N")
+```
+
+## Example: Minimum Convex Polygon (MCP)
+The estMCP function uses the following workflow to estimate Minimum Convex Polygon estimates:
+1) For each 'group', estimate the centroid of the set of points and obtain the covariance of the xy coordinates pairs.
+2) Calculate the distance of each point to the centroid.
+3) Obtain the distance threshold for each 'level' given the quantile values. 
+4) Convert the Points to a SpatialPolygonsDataFrame (sp package) and attribute with ShapeArea.
+5) Function returns an object of class("estObj"), which is a list of SpatialPolygonsDataFrames, 1 list item for each 'group'.
+
+Below is an example:
+
+```
+library(rKIN)
+# read in example data. Data contain 2 species, a habitat class and C/N values
+data("rodents")
+head(rodents)
+# estimate niche overlap between 2 species using kernel UD and 3 confidence intervals
+test.mcp<- estMCP(data=rodents, x="Ave_C", y="Ave_N", group="Species", levels=c(50, 75, 95))
+# Extract the area of each polygon
+mcp.area<- getArea(test.mcp)
+mcp.area
+# determine polygon overlap for all polygons
+mcp.olp<- calcOverlap(test.mcp)
+mcp.olp
+# plot the mcp estimates
+plotKIN(test.mcp, title="Test Minimum Convex Polygons", x="Ave_C", y="Ave_N")
+```
+## Compare the areas between methods
+```
+library(reshape2)
+# get the areas for all methods
+df<- rbind(getArea(test.kin), getArea(test.mcp), getArea(test.elp))
+#use the reshape2 package to pivot the data
+df<- dcast(data = df, Group+ConfInt~Method, value.var="ShapeArea")
+df
+```

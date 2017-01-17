@@ -1,0 +1,32 @@
+Package: rKIN
+Type: Package
+Title: (Kernel) Isotope Niche Estimator Functions - rKIN
+Version: 0.1
+Date: 2017-01-16
+URL: http://github.com/salbeke/rKIN
+BugReports: http://github.com/salbeke/rKIN/issues
+Depends:
+    R (>= 2.10),
+    maptools
+Imports:
+    ggplot2,
+    MASS,
+    sp,
+    rgeos
+Authors@R: person("Shannon E.", "Albeke", email = "salbeke@uwyo.edu",
+    role=c("aut","cre"))
+Maintainer: Shannon E Albeke <salbeke@uwyo.edu>
+Description: Applies methods used to estimate animal homerange, but
+    instead of geospatial coordinates, we use isotopic coordinates. The estimation
+    methods include: 1) 2-dimensional bivariate normal kernel utilization density
+    estimator, 2) bivariate normal ellipse estimator, and 3) minimum convex polygon
+    estimator, all applied to stable isotope data. Additionally, functions to
+    determine niche area, polygon overlap between groups and levels (confidence
+    contours) and plotting capabilities.
+License: GPL (>= 3)
+LazyData: TRUE
+RoxygenNote: 5.0.1
+Suggests: knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr

@@ -1,8 +1,8 @@
 #' Estimate Bivariate Normal Ellipse Isotope Niche
-#' 
-#' Calculates the Bivariate Normal Ellipse Polygon for isotopic values at multiple confidence levels. Returns a list of 
+#'
+#' Calculates the Bivariate Normal Ellipse Polygon for isotopic values at multiple confidence levels. Returns a list of
 #' SpatialPolygonsDataFrame, each list item representing the grouping variable (i.e. species).
-#' 
+#'
 #' @param data data.frame object containing columns of isotopic values and grouping variables
 #' @param x character giving the column name of the x coordinates
 #' @param y character giving the column name of the y coordinates
@@ -16,7 +16,7 @@
 #' library(rKIN)
 #' data("rodents")
 #' #estimate niche overlap between 2 species using bivariate ellipse
-#' test.elp<- estEllipse(data=rodents, x="Ave_C", y="Ave_N", group="Species", 
+#' test.elp<- estEllipse(data=rodents, x="Ave_C", y="Ave_N", group="Species",
 #'                      levels=c(50, 75, 95))
 #' #determine polygon overlap for all polygons
 #' plotKIN(test.elp, scaler=2, title="Ellipse Estimates", xlab="Ave_C", ylab="Ave_N")
@@ -35,7 +35,7 @@ estEllipse <- function(data, x, y, group, levels = c(50, 75, 95), smallSamp = FA
     stop("levels must be a numeric vector with values ranging between 1 and 100!")
   if(!all(levels > 0 | levels <= 100))
     stop("levels must be a numeric vector with values ranging between 1 and 100!")
-  
+
   # Loop through each unique value of the group column
   grp<- unique(as.character(data[,group]))
   # create the output object for SpatialPolygonsDataFrame(s)
@@ -47,11 +47,13 @@ estEllipse <- function(data, x, y, group, levels = c(50, 75, 95), smallSamp = FA
     # Test for the number of samples. If too small, kick an error
     if(nrow(df.g) < 10 & smallSamp == FALSE)
       stop(paste("It appears that group ", grp[g], " has fewer than 10 samples. Please remove group ", grp[g], " from the data.frame."))
+    if(nrow(df.g) < 3 & smallSamp == TRUE)
+      stop(paste("It appears that group ", grp[g], " has fewer than 3 samples. Please remove group ", grp[g], " from the data.frame."))
     # calculate the centroid of the points to calculate confidence intervals
     cent <- apply(df.g[, c(x, y)], 2, mean)
     # calculate the covariance
     sigma<- stats::cov(cbind(df.g[ , x], df.g[ , y]))
-    
+
     # create the spatial points data.frame
     # populate the points into the spdf
     spts.tmp<- sp::SpatialPointsDataFrame(coords = df.g[ , c(x, y)],

@@ -1,8 +1,8 @@
 #' Estimate Kernel Isotope Niche
-#' 
-#' Calculates the 2D kernel for isotopic values at multiple confidence levels. Returns a list of 
+#'
+#' Calculates the 2D kernel for isotopic values at multiple confidence levels. Returns a list of
 #' SpatialPolygonsDataFrame, each list item representing the grouping variable (i.e. species).
-#' 
+#'
 #' @param data data.frame object containing columns of isotopic values and grouping variables
 #' @param x character giving the column name of the x coordinates
 #' @param y character giving the column name of the y coordinates
@@ -17,7 +17,7 @@
 #' library(rKIN)
 #' data("rodents")
 #' #estimate niche overlap between 2 species using kernel UD
-#' test.kin<- estKIN(data=rodents, x="Ave_C", y="Ave_N", group="Species", 
+#' test.kin<- estKIN(data=rodents, x="Ave_C", y="Ave_N", group="Species",
 #'                  levels=c(50, 75, 95), scaler=2)
 #' #determine polygon overlap for all polygons
 #' plotKIN(test.kin, scaler=2, title="Kernel Estimates", xlab="Ave_C", ylab="Ave_N")
@@ -39,13 +39,13 @@ estKIN <- function(data, x, y, group, levels = c(50, 75, 95), scaler = 2, smallS
     stop("levels must be a numeric vector with values ranging between 1 and 100!")
   if(!inherits(scaler, "numeric"))
     stop("scaler must be a numeric!")
-  
+
   # set the grid size for all groups, expand values by 2 by default
-  grid.x<- seq(from = round((min(data[ , x]) - scaler), 1), 
+  grid.x<- seq(from = round((min(data[ , x]) - scaler), 1),
                to = round((max(data[ , x]) + scaler), 1), by = 0.1)
-  grid.y<- seq(from = round((min(data[ , y]) - scaler), 1), 
+  grid.y<- seq(from = round((min(data[ , y]) - scaler), 1),
                to = round((max(data[ , y]) + scaler), 1), by = 0.1)
-  
+
   # Loop through each unique value of the group column
   grp<- unique(as.character(data[, group]))
   #create the output object for SpatialPolygonsDataFrame(s)
@@ -56,13 +56,15 @@ estKIN <- function(data, x, y, group, levels = c(50, 75, 95), scaler = 2, smallS
     # Test for the number of samples. If too small, kick an error
     if(nrow(data[data[,group]==grp[g] , ]) < 10 & smallSamp == FALSE)
       stop(paste("It appears that group ", grp[g], " has fewer than 10 samples. Please remove group ", grp[g], " from the data.frame."))
+    if(nrow(df.g) < 3 & smallSamp == TRUE)
+      stop(paste("It appears that group ", grp[g], " has fewer than 3 samples. Please remove group ", grp[g], " from the data.frame."))
     #Estimate 2D kernel of isotope space
-    kde<- MASS::kde2d(x = data[data[,group]==grp[g] , x], y = data[data[,group]==grp[g] , y], 
+    kde<- MASS::kde2d(x = data[data[,group]==grp[g] , x], y = data[data[,group]==grp[g] , y],
                       n = c(length(grid.x), length(grid.y)),
                       lims = c(min(grid.x), max(grid.x), min(grid.y), max(grid.y)))
     # Must determine quantile thresholds given input levels, default is 50%, 75%, 95%. This is using helper function
     rq<- getKernelThreshold(kde$z, levels)
-    
+
     df.g<- data[data[,group]==grp[g] , ]
     # create the spatial points data.frame
     # populate the points into the spdf
@@ -77,7 +79,7 @@ estKIN <- function(data, x, y, group, levels = c(50, 75, 95), scaler = 2, smallS
     sp.tmp<- createSPDF() # use helper function
     for(lev in 1:length(levels)){
       cL <- grDevices::contourLines(x = kde$x, y = kde$y, z = kde$z, levels = rq$Threshold[lev])
-      
+
       # Function was directly copied from raster package
       .contourLines2LineList <- function(cL) {
         n <- length(cL)
@@ -88,10 +90,10 @@ estKIN <- function(data, x, y, group, levels = c(50, 75, 95), scaler = 2, smallS
         }
         res
       }
-      
-      if (length(cL) < 1) 
+
+      if (length(cL) < 1)
         stop("no contour lines")
-      cLstack <- tapply(1:length(cL), sapply(cL, function(x) x[[1]]), 
+      cLstack <- tapply(1:length(cL), sapply(cL, function(x) x[[1]]),
                         function(x) x, simplify = FALSE)
       df <- data.frame(ConfInt = levels[lev])
       m <- length(cLstack)
@@ -104,7 +106,7 @@ estKIN <- function(data, x, y, group, levels = c(50, 75, 95), scaler = 2, smallS
       SL <- sp::SpatialLines(res)
       SL<- sp::SpatialLinesDataFrame(SL, data = df)
       # end Contour from raster function
-      
+
       #////////////////////////////////////////////////
       # convert the Lines to a set of polygons
       cl.out<- list()
@@ -115,18 +117,18 @@ estKIN <- function(data, x, y, group, levels = c(50, 75, 95), scaler = 2, smallS
           # create a single polygon
           rstdy<- try(sp::Polygon(SL@lines[[1]]@Lines[[cl]]), silent = TRUE)
           if(!inherits(rstdy, "try-error")){
-            #create a list of polygons 
+            #create a list of polygons
             cl.out<- c(cl.out, sp::Polygons(list(rstdy), ID = cl))
           }
         }
         else{
           #create a single polygon
           rstdy<- sp::Polygon(SL@lines[[1]]@Lines[[cl]])
-          #create a list of polygons 
+          #create a list of polygons
           cl.out<- c(cl.out, sp::Polygons(list(rstdy), ID = cl))
         }
       }#close cl loop
-      
+
       # now make it spatially aware
       if(length(cl.out)>0){
         pcont<- sp::SpatialPolygons(cl.out)
@@ -154,19 +156,19 @@ estKIN <- function(data, x, y, group, levels = c(50, 75, 95), scaler = 2, smallS
                 # OK, just overwrote the polygon with the hole get out of loop
                 break
               }# close hole >1
-              
+
             }# close else
           }# close rw
           # need to get out of the repeat
           if(length(which(apply(hole, 2, any)==TRUE)) < 1) break
         }# close repeat
-        
+
         # now merge the remaining polys into a multipart
         noply<- rgeos::gUnaryUnion(pcont)
         noply<- sp::SpatialPolygonsDataFrame(noply, data = data.frame(Method = "Kernel", Group = grp[g], ConfInt = levels[lev], ShapeArea = noply@polygons[[1]]@area), match.ID = FALSE)
         noply<- sp::spChFIDs(noply, x = as.character(lev))
         #////////////////////////////////////////////////
-        
+
         sp.tmp<- sp::rbind.SpatialPolygonsDataFrame(sp.tmp, noply)
       }# close cl.out if
     }# end levels loop

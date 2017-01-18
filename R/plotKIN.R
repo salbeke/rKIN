@@ -52,6 +52,7 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
   xs<- numeric()
   ys<- numeric()
   df<- list()
+
   #Loop through the polygons
   for(i in 1:length(estObj$estObj)){
     #xs<- c(xs, sp::bbox(estObj$estObj[[i]])[1, ])
@@ -66,19 +67,24 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
     df<- c(df, list(gdf))
   }# close i loop
   #loop through the input points
-  pts<- data.frame()
+  pts<- list()
   for(i in 1:length(estObj$estInput)){
-    #place all points into one data.frame for plotting
-    pts<- rbind(pts, estObj$estInput[[i]]@data)
+    #place all points into data.frame list for plotting
+    #pf<- ggplot2::fortify(estObj$estInput[[i]], region = "Group")
+
+    pts<- c(pts, list(estObj$estInput[[i]]@data))
+    #store all coordinates for later use
+    xs<- c(xs, estObj$estInput[[i]]@data[ , 3])
+    ys<- c(ys, estObj$estInput[[i]]@data[ , 4])
   }# close i loop
-  xs<- pts[ , 3]
-  ys<- pts[ , 4]
+
 
   # make a plot using ggplot2
   kin.plot<- ggplot2::ggplot() +
     lapply(df, function(x) ggplot2::geom_polygon(data = x, alpha = alpha, ggplot2::aes_string(x = "long", y = "lat", fill = "Group_ConfInt", group = "group"))) +
-    scale_fill_manual(values=getColors(length(df), length(ord))) +
-    ggplot2::geom_point(data = pts, aes_string(x = names(pts)[3], y = names(pts)[4], colour = "Group", shape = "Group")) +
+    ggplot2::scale_fill_manual(values=getColors(length(df), length(ord))) +
+    #ggplot2::geom_point(data = pts, aes_string(x = names(pts)[3], y = names(pts)[4], colour = "Group", shape = "Group")) +
+    lapply(pts, function(x) ggplot2::geom_point(data = x, ggplot2::aes_string(x = names(x)[3], y = names(x)[4], colour = "Group", shape = "Group"))) +
     ggplot2::scale_color_manual(values = getColors(length(df), 1)) +
     ggplot2::coord_fixed(ratio = ((max(xs) + scaler) - (min(xs) - scaler))/((max(ys) + scaler) - (min(ys) - scaler)),
                 xlim = c((min(xs) - scaler), (max(xs) + scaler)),
@@ -86,12 +92,13 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
     ggplot2::scale_x_continuous(breaks = seq(from = round((min(xs) - scaler)), to = round((max(xs) + scaler)), by = scaler)) +
     ggplot2::scale_y_continuous(breaks = seq(from = round((min(ys) - scaler)), to = round((max(ys) + scaler)), by = scaler)) +
     ggplot2::labs(title = title, x = xlab, y = ylab) +
-    ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(alpha = alpha))) +
+    ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(alpha = alpha))) +
     ggplot2::theme_bw() +
     ggplot2::theme(panel.background = ggplot2::element_blank(),
           panel.grid.major = ggplot2::element_blank(),
           panel.grid.minor = ggplot2::element_blank(),
-          panel.border= ggplot2::element_rect(fill = NA, color = "black"))
+          panel.border= ggplot2::element_rect(fill = NA, color = "black"),
+          plot.title = element_text(hjust = 0.5))
   # return the plot
   return(kin.plot)
 

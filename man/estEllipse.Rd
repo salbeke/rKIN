@@ -23,14 +23,14 @@ estEllipse(data, x, y, group, levels = c(50, 75, 95), smallSamp = FALSE)
 A list of SpatialPolygonsDataFrame, each list item representing the grouping variable.
 }
 \description{
-Calculates the Bivariate Normal Ellipse Polygon for isotopic values at multiple confidence levels. Returns a list of 
+Calculates the Bivariate Normal Ellipse Polygon for isotopic values at multiple confidence levels. Returns a list of
 SpatialPolygonsDataFrame, each list item representing the grouping variable (i.e. species).
 }
 \examples{
 library(rKIN)
 data("rodents")
 #estimate niche overlap between 2 species using bivariate ellipse
-test.elp<- estEllipse(data=rodents, x="Ave_C", y="Ave_N", group="Species", 
+test.elp<- estEllipse(data=rodents, x="Ave_C", y="Ave_N", group="Species",
                      levels=c(50, 75, 95))
 #determine polygon overlap for all polygons
 plotKIN(test.elp, scaler=2, title="Ellipse Estimates", xlab="Ave_C", ylab="Ave_N")

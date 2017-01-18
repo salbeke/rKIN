@@ -21,7 +21,9 @@
 #' test.kin<- estKIN(data=rodents, x="Ave_C", y="Ave_N", group="Species",
 #'                    levels=c(50, 75, 95), scaler=2)
 #' #determine polygon overlap for all polygons
-#' plotKIN(test.kin, scaler = 1, title = "Kernel Estimates", xlab = expression({delta}^13*C~ ('\u2030')), ylab = expression({delta}^15*N~ ('\u2030')))
+#' plotKIN(test.kin, scaler = 1, title = "Kernel Estimates",
+#'          xlab = expression({delta}^13*C~ ('\u2030')),
+#'          ylab = expression({delta}^15*N~ ('\u2030')))
 
 plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab = "y"){
   requireNamespace("maptools")

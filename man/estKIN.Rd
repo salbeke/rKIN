@@ -26,14 +26,14 @@ estKIN(data, x, y, group, levels = c(50, 75, 95), scaler = 2,
 A class rKIN object containing a list of SpatialPolygonsDataFrame, each list item representing the grouping variable.
 }
 \description{
-Calculates the 2D kernel for isotopic values at multiple confidence levels. Returns a list of 
+Calculates the 2D kernel for isotopic values at multiple confidence levels. Returns a list of
 SpatialPolygonsDataFrame, each list item representing the grouping variable (i.e. species).
 }
 \examples{
 library(rKIN)
 data("rodents")
 #estimate niche overlap between 2 species using kernel UD
-test.kin<- estKIN(data=rodents, x="Ave_C", y="Ave_N", group="Species", 
+test.kin<- estKIN(data=rodents, x="Ave_C", y="Ave_N", group="Species",
                  levels=c(50, 75, 95), scaler=2)
 #determine polygon overlap for all polygons
 plotKIN(test.kin, scaler=2, title="Kernel Estimates", xlab="Ave_C", ylab="Ave_N")

@@ -56,7 +56,7 @@ estKIN <- function(data, x, y, group, levels = c(50, 75, 95), scaler = 2, smallS
     # Test for the number of samples. If too small, kick an error
     if(nrow(data[data[,group]==grp[g] , ]) < 10 & smallSamp == FALSE)
       stop(paste("It appears that group ", grp[g], " has fewer than 10 samples. Please remove group ", grp[g], " from the data.frame."))
-    if(nrow(df.g) < 3 & smallSamp == TRUE)
+    if(nrow(data[data[,group]==grp[g] , ]) < 3 & smallSamp == TRUE)
       stop(paste("It appears that group ", grp[g], " has fewer than 3 samples. Please remove group ", grp[g], " from the data.frame."))
     #Estimate 2D kernel of isotope space
     kde<- MASS::kde2d(x = data[data[,group]==grp[g] , x], y = data[data[,group]==grp[g] , y],

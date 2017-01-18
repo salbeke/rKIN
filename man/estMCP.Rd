@@ -23,14 +23,14 @@ estMCP(data, x, y, group, levels = c(50, 75, 95), smallSamp = FALSE)
 A list of SpatialPolygonsDataFrame, each list item representing the grouping variable.
 }
 \description{
-Calculates the Minimum Convex Polygon for isotopic values at multiple confidence levels. Returns a list of 
+Calculates the Minimum Convex Polygon for isotopic values at multiple confidence levels. Returns a list of
 SpatialPolygonsDataFrame, each list item representing the grouping variable (i.e. species).
 }
 \examples{
 library(rKIN)
 data("rodents")
 #estimate niche overlap between 2 species using minimum convex polygons
-test.mcp<- estMCP(data=rodents, x="Ave_C", y="Ave_N", group="Species", 
+test.mcp<- estMCP(data=rodents, x="Ave_C", y="Ave_N", group="Species",
                    levels=c(50, 75, 95))
 #determine polygon overlap for all polygons
 plotKIN(test.mcp, scaler=2, title="Minimum Convex Hull Estimates", xlab="Ave_C", ylab="Ave_N")

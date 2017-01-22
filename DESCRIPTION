@@ -13,7 +13,7 @@ Imports:
     MASS,
     sp,
     rgeos
-Authors@R: person("Shannon E.", "Albeke", email = "salbeke@uwyo.edu",
+Authors@R: person("Shannon E", "Albeke", email = "salbeke@uwyo.edu",
     role=c("aut","cre"))
 Maintainer: Shannon E Albeke <salbeke@uwyo.edu>
 Description: Applies methods used to estimate animal homerange, but

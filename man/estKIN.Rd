@@ -4,7 +4,7 @@
 \alias{estKIN}
 \title{Estimate Kernel Isotope Niche}
 \usage{
-estKIN(data, x, y, group, levels = c(50, 75, 95), scaler = 2,
+estKIN(data, x, y, group, levels = c(50, 75, 95), scaler = 10,
   smallSamp = FALSE)
 }
 \arguments{
@@ -18,7 +18,7 @@ estKIN(data, x, y, group, levels = c(50, 75, 95), scaler = 2,
 
 \item{levels}{Numeric vector of desired percent levels (e.g. c(10, 50, 90). Should not be less than 1 or greater than 99)}
 
-\item{scaler}{numeric value to expand the min/max x and y values. Default value = 2}
+\item{scaler}{numeric value to expand the min/max x and y values. This assists with error given smaller sample sizes. Default value = 10}
 
 \item{smallSamp}{logical value indicating whether to override minimum number of samples. Currently 10 samples are required.}
 }

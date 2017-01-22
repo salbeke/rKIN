@@ -57,8 +57,8 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
 
   #Loop through the polygons
   for(i in 1:length(estObj$estObj)){
-    #xs<- c(xs, sp::bbox(estObj$estObj[[i]])[1, ])
-    #ys<- c(ys, sp::bbox(estObj$estObj[[i]])[2, ])
+    xs<- c(xs, sp::bbox(estObj$estObj[[i]])[1, ])
+    ys<- c(ys, sp::bbox(estObj$estObj[[i]])[2, ])
     # Create new column to set the drawing order in ggplot, largest CI first
     for(j in 1:length(ord)){
       estObj$estObj[[i]]@data$PlotOrder[estObj$estObj[[i]]@data$ConfInt==ord[j]]<- j

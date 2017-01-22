@@ -1,6 +1,6 @@
 Package: rKIN
 Type: Package
-Title: (Kernel) Isotope Niche Estimator Functions - rKIN
+Title: (Kernel) Isotope Niche Estimation
 Version: 0.1
 Date: 2017-01-16
 URL: http://github.com/salbeke/rKIN
@@ -13,7 +13,7 @@ Imports:
     MASS,
     sp,
     rgeos
-Authors@R: person("Shannon E.", "Albeke", email = "salbeke@uwyo.edu",
+Authors@R: person("Shannon E", "Albeke", email = "salbeke@uwyo.edu",
     role=c("aut","cre"))
 Maintainer: Shannon E Albeke <salbeke@uwyo.edu>
 Description: Applies methods used to estimate animal homerange, but

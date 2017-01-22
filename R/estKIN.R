@@ -8,7 +8,7 @@
 #' @param y character giving the column name of the y coordinates
 #' @param group character giving the column name of the grouping variable (i.e. species)
 #' @param levels Numeric vector of desired percent levels (e.g. c(10, 50, 90). Should not be less than 1 or greater than 99)
-#' @param scaler numeric value to expand the min/max x and y values. Default value = 2
+#' @param scaler numeric value to expand the min/max x and y values. This assists with error given smaller sample sizes. Default value = 10
 #' @param smallSamp logical value indicating whether to override minimum number of samples. Currently 10 samples are required.
 #' @return A class rKIN object containing a list of SpatialPolygonsDataFrame, each list item representing the grouping variable.
 #' @author Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
@@ -23,22 +23,30 @@
 #' plotKIN(test.kin, scaler=2, title="Kernel Estimates", xlab="Ave_C", ylab="Ave_N")
 
 
-estKIN <- function(data, x, y, group, levels = c(50, 75, 95), scaler = 2, smallSamp = FALSE){
+estKIN <- function(data, x, y, group, levels = c(50, 75, 95), scaler = 10, smallSamp = FALSE){
   # need to perform some class testing first before running any below code
   if(!inherits(data, "data.frame"))
     stop("data must be a data.frame!")
   if(!inherits(x, "character"))
     stop("x must be a character giving the x coordinate column name!")
+  if(x %in% names(data)==FALSE)
+    stop("The value of x does not appear to be a valid column name!")
+  if(!inherits(data[, x], "numeric"))
+    stop("data in column x is not numeric!")
   if(!inherits(y, "character"))
     stop("y must be a character giving the y coordinate column name!")
+  if(y %in% names(data)==FALSE)
+    stop("The value of y does not appear to be a valid column name!")
+  if(!inherits(data[, y], "numeric"))
+    stop("data in column y is not numeric!")
   if(!inherits(group, "character"))
     stop("group must be a character giving the grouping variable column name!")
+  if(group %in% names(data)==FALSE)
+    stop("The value of group does not appear to be a valid column name!")
   if(!inherits(levels, "numeric"))
     stop("levels must be a numeric vector with values ranging between 1 and 100!")
   if(!all(levels > 0 | levels <= 100))
     stop("levels must be a numeric vector with values ranging between 1 and 100!")
-  if(!inherits(scaler, "numeric"))
-    stop("scaler must be a numeric!")
 
   # set the grid size for all groups, expand values by 2 by default
   grid.x<- seq(from = round((min(data[ , x]) - scaler), 1),

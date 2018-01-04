@@ -8,6 +8,10 @@
 #' @param title character string for a plot title.
 #' @param xlab character or expression string for the x-axis label.
 #' @param ylab character or expression string for the y-axis label.
+#' @param xmin default is NULL, numeric value of user specified minimum x axis value
+#' @param xmax default is NULL, numeric value of user specified maximum x axis value
+#' @param ymin default is NULL, numeric value of user specified minimum y axis value
+#' @param ymax default is NULL, numeric value of user specified maximum y axis value
 #' @return A plot of all groups and levels.
 #' @author Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 #' @export
@@ -25,7 +29,7 @@
 #'          xlab = expression({delta}^13*C~ ('\u2030')),
 #'          ylab = expression({delta}^15*N~ ('\u2030')))
 
-plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab = "y"){
+plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab = "y", xmin = NULL, xmax = NULL, ymin = NULL, ymax = NULL){
   requireNamespace("maptools")
   #requireNamespace("rgeos")
   #library(maptools)
@@ -47,6 +51,19 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
   if(!inherits(ylab, "character"))
     if(!inherits(ylab, "expression"))
       stop("ylab must be a character or an expression!")
+  if(!inherits(xmin, "numeric"))
+    if(!is.null(xmin))
+      stop("xmin must be numeric or NULL!")
+  if(!inherits(xmax, "numeric"))
+    if(!is.null(xmax))
+      stop("xmax must be numeric or NULL!")
+  if(!inherits(ymin, "numeric"))
+    if(!is.null(ymin))
+      stop("ymin must be numeric or NULL!")
+  if(!inherits(ymax, "numeric"))
+    if(!is.null(ymax))
+      stop("ymax must be numeric or NULL!")
+
 
   # Get the ConfInt to be sorted descending for ggplot stuff
   ord<- unique(estObj$estObj[[1]]@data$ConfInt)[order(unique(estObj$estObj[[1]]@data$ConfInt), decreasing = TRUE)]
@@ -80,6 +97,13 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
     ys<- c(ys, estObj$estInput[[i]]@data[ , 4])
   }# close i loop
 
+  # Set the x and y axes limits
+  ifelse(is.null(xmin) & !is.numeric(xmin), xmin <- (min(xs) - scaler), xmin)
+  ifelse(is.null(xmax) & !is.numeric(xmax), xmax <- (max(xs) + scaler), xmax)
+  ifelse(is.null(ymin) & !is.numeric(ymin), ymin <- (min(ys) - scaler), ymin)
+  ifelse(is.null(ymax) & !is.numeric(ymax), ymax <- (max(ys) + scaler), ymax)
+
+
 
   # make a plot using ggplot2
   kin.plot<- ggplot2::ggplot() +
@@ -88,11 +112,9 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
     #ggplot2::geom_point(data = pts, aes_string(x = names(pts)[3], y = names(pts)[4], colour = "Group", shape = "Group")) +
     lapply(pts, function(x) ggplot2::geom_point(data = x, ggplot2::aes_string(x = names(x)[3], y = names(x)[4], colour = "Group", shape = "Group"))) +
     ggplot2::scale_color_manual(values = getColors(length(df), 1)) +
-    ggplot2::coord_fixed(ratio = ((max(xs) + scaler) - (min(xs) - scaler))/((max(ys) + scaler) - (min(ys) - scaler)),
-                xlim = c((min(xs) - scaler), (max(xs) + scaler)),
-                ylim = c((min(ys) - scaler), (max(ys) + scaler))) +
-    ggplot2::scale_x_continuous(breaks = seq(from = round((min(xs) - scaler)), to = round((max(xs) + scaler)), by = scaler)) +
-    ggplot2::scale_y_continuous(breaks = seq(from = round((min(ys) - scaler)), to = round((max(ys) + scaler)), by = scaler)) +
+    ggplot2::coord_fixed(ratio = (xmax - xmin)/(ymax - ymin), xlim = c(xmin, xmax), ylim = c(ymin, ymax)) +
+    ggplot2::scale_x_continuous(breaks = seq(from = round(xmin), to = round(xmax), by = scaler)) +
+    ggplot2::scale_y_continuous(breaks = seq(from = round(ymin), to = round(ymax), by = scaler)) +
     ggplot2::labs(title = title, x = xlab, y = ylab) +
     ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(alpha = alpha))) +
     ggplot2::theme_bw() +

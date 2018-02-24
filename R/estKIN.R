@@ -25,7 +25,7 @@
 #' * hbcv - Biased cross-validation bandwitdh matrix selector for bivariate data. Values can be obtained using bw_hbcv().
 #' * hnm - Normal mixture bandwidth. Values can be obtained using bw_hnm().
 #' * hucv - Least-squares cross-validation bandwidth matrix selector for multivariate data. Values can be obtained using bw_hucv().
-#' * ref - Uses MASS::bandwidth.nrd for both x and y separately, dividing values by 4 to match the scale or ks methods. See MASS:kde2d() for details (i.e. the function divides the values by 4).
+#' * ref - Uses MASS::bandwidth.nrd for both x and y separately, dividing values by 4 to match the scale of ks methods. Values can be obtained using bw_ref(). See MASS:kde2d() for details (i.e. the function divides the values by 4).
 #'
 #'
 #' @return A class rKIN object containing a list of SpatialPolygonsDataFrame, each list item representing the grouping variable.
@@ -47,24 +47,31 @@ estKIN <- function(data, x, y, h = "hpi", hval = NULL, group, levels = c(50, 75,
     stop("data must be a data.frame!")
   if(!inherits(x, "character"))
     stop("x must be a character giving the x coordinate column name!")
-  if(x %in% names(data)==FALSE)
+  if(x %in% names(data) == FALSE)
     stop("The value of x does not appear to be a valid column name!")
   if(!inherits(data[, x], "numeric"))
     stop("data in column x is not numeric!")
   if(!inherits(y, "character"))
     stop("y must be a character giving the y coordinate column name!")
-  if(y %in% names(data)==FALSE)
+  if(y %in% names(data) == FALSE)
     stop("The value of y does not appear to be a valid column name!")
   if(!inherits(data[, y], "numeric"))
     stop("data in column y is not numeric!")
   if(!inherits(group, "character"))
     stop("group must be a character giving the grouping variable column name!")
-  if(group %in% names(data)==FALSE)
+  if(group %in% names(data) == FALSE)
     stop("The value of group does not appear to be a valid column name!")
   if(!inherits(levels, "numeric"))
     stop("levels must be a numeric vector with values ranging between 1 and 100!")
   if(!all(levels > 0 | levels <= 100))
     stop("levels must be a numeric vector with values ranging between 1 and 100!")
+  if(!h %in% c("hns", "hpi", "hscv", "hlscv", "hbcv", "hnm", "hucv", "ref") & is.null(hval))
+    stop("The bandwidth estimator method is misspecified. Please refer to the list of available options")
+  if(!is.null(hval) & length(hval) != 2)
+    stop("The provided bandwidth vector (hval) is not of length 2.")
+  if(!is.null(hval) & !inherits(hval, "numeric"))
+    stop("The provided bandwidth vector (hval) is not numeric.")
+
 
   # set the grid size for all groups, expand values by 2 by default
   grid.x<- seq(from = round((min(data[ , x]) - scaler), 1),

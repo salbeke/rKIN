@@ -6,10 +6,28 @@
 #' @param data data.frame object containing columns of isotopic values and grouping variables
 #' @param x character giving the column name of the x coordinates
 #' @param y character giving the column name of the y coordinates
+#' @param h character decribing the bandwidth estimator method. Default = "hpi". See Details for more information.
+#' @param hval numeric vector of length 2 describing the bandwidth in x and y directions. Default = NULL
 #' @param group character giving the column name of the grouping variable (i.e. species)
 #' @param levels Numeric vector of desired percent levels (e.g. c(10, 50, 90). Should not be less than 1 or greater than 99)
 #' @param scaler numeric value to expand the min/max x and y values. This assists with error given smaller sample sizes. Default value = 10
 #' @param smallSamp logical value indicating whether to override minimum number of samples. Currently 10 samples are required.
+#' @details Details
+#' For the h argument there are 8 different bandwidth estimation options ("hns", "hpi", "hscv", "hlscv", "hbcv", "hnm", "hucv", "ref").
+#' "ref" = The default MASS::kde2d bandwidth method. The remaining options are obtained from the 'ks' package with the default
+#' method being "hpi". For all ks package methods, the defualt values are accepted and only the x and y values are passed to the
+#' bivariate bandwidth estimating functions. For all bandwidth estimation methods, reducing the data to an individual group will provide the same bandwidths as used during rKIN estimation.
+#'
+#' * hpi  - Default Plug-in bandwidth selector using ks::Hpi function. Values can be obtained using bw_hpi().
+#' * hns  - Normal scale bandwidth using ks::Hns function.Values can be obtained using bw_hns().
+#' * hscv - Smoothed cross-validation bandwidth selector. Values can be obtained using bw_hscv().
+#' * hlscv - Least-squares cross-validation bandwidth matrix selector for multivariate data. Values can be obtained using bw_hlscv().
+#' * hbcv - Biased cross-validation bandwitdh matrix selector for bivariate data. Values can be obtained using bw_hbcv().
+#' * hnm - Normal mixture bandwidth. Values can be obtained using bw_hnm().
+#' * hucv - Least-squares cross-validation bandwidth matrix selector for multivariate data. Values can be obtained using bw_hucv().
+#' * ref - Uses MASS::bandwidth.nrd for both x and y separately, dividing values by 4 to match the scale or ks methods. See MASS:kde2d() for details (i.e. the function divides the values by 4).
+#'
+#'
 #' @return A class rKIN object containing a list of SpatialPolygonsDataFrame, each list item representing the grouping variable.
 #' @author Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 #' @export
@@ -23,7 +41,7 @@
 #' plotKIN(test.kin, scaler=2, title="Kernel Estimates", xlab="Ave_C", ylab="Ave_N")
 
 
-estKIN <- function(data, x, y, group, levels = c(50, 75, 95), scaler = 10, smallSamp = FALSE){
+estKIN <- function(data, x, y, h = "hpi", hval = NULL, group, levels = c(50, 75, 95), scaler = 10, smallSamp = FALSE){
   # need to perform some class testing first before running any below code
   if(!inherits(data, "data.frame"))
     stop("data must be a data.frame!")

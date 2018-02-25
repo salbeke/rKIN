@@ -66,7 +66,15 @@ test_that("estKIN input data check", {
   expect_error(estKIN(data = dat0, x = "C13", y = "N15", group = "Species", smallSamp = TRUE), info = "KIN Number of Rows Check")
   expect_error(estKIN(data = dat1, x = "C13", y = "N15", group = "Species", smallSamp = FALSE), info = "KIN Number of Rows Check")
   expect_output(estKIN(data = dat2, x = "C13", y = "N15", group = "Species", smallSamp = FALSE), regexp = NA, info = "KIN Should be successful")
-  expect_output(estKIN(data = dat1, x = "C13", y = "N15", group = "Species", smallSamp = TRUE, scaler = 10), regexp = NA, info = "KIN Should be successful")
+  expect_output(estKIN(data = dat2, x = "C13", y = "N15", group = "Species", smallSamp = TRUE, scaler = 10), regexp = NA, info = "KIN Should be successful")
+  expect_output(estKIN(data = dat2, x = "C13", y = "N15", h = "hpi", group = "Species", smallSamp = TRUE, scaler = 10), regexp = NA, info = "KIN Should be successful, method = hpi")
+  expect_output(estKIN(data = dat2, x = "C13", y = "N15", h = "hns", group = "Species", smallSamp = TRUE, scaler = 10), regexp = NA, info = "KIN Should be successful, method = hns")
+  expect_output(estKIN(data = dat2, x = "C13", y = "N15", h = "hscv", group = "Species", smallSamp = TRUE, scaler = 10), regexp = NA, info = "KIN Should be successful, method = hscv")
+  expect_output(estKIN(data = dat2, x = "C13", y = "N15", h = "hlscv", group = "Species", smallSamp = TRUE, scaler = 10), regexp = NA, info = "KIN Should be successful, method = hlscv")
+  expect_output(estKIN(data = dat2, x = "C13", y = "N15", h = "hbcv", group = "Species", smallSamp = TRUE, scaler = 10), regexp = NA, info = "KIN Should be successful, method = hbcv")
+  expect_output(estKIN(data = dat2, x = "C13", y = "N15", h = "hnm", group = "Species", smallSamp = TRUE, scaler = 10), regexp = NA, info = "KIN Should be successful, method = hnm")
+  expect_output(estKIN(data = dat2, x = "C13", y = "N15", h = "hucv", group = "Species", smallSamp = TRUE, scaler = 10), regexp = NA, info = "KIN Should be successful, method = hucv")
+  expect_output(estKIN(data = dat2, x = "C13", y = "N15", h = "ref", group = "Species", smallSamp = TRUE, scaler = 10), regexp = NA, info = "KIN Should be successful, method = ref")
 })
 
 #Create output to test the functions for area and plotting

@@ -5,7 +5,7 @@
 \title{Plotting function for rKIN polygons}
 \usage{
 plotKIN(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x",
-  ylab = "y")
+  ylab = "y", xmin = NULL, xmax = NULL, ymin = NULL, ymax = NULL)
 }
 \arguments{
 \item{estObj}{list object created from estKIN, estMCP or estEllipse functions}
@@ -19,6 +19,14 @@ plotKIN(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x",
 \item{xlab}{character or expression string for the x-axis label.}
 
 \item{ylab}{character or expression string for the y-axis label.}
+
+\item{xmin}{default is NULL, numeric value of user specified minimum x axis value}
+
+\item{xmax}{default is NULL, numeric value of user specified maximum x axis value}
+
+\item{ymin}{default is NULL, numeric value of user specified minimum y axis value}
+
+\item{ymax}{default is NULL, numeric value of user specified maximum y axis value}
 }
 \value{
 A plot of all groups and levels.
@@ -40,4 +48,3 @@ plotKIN(test.kin, scaler = 1, title = "Kernel Estimates",
 \author{
 Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 }
-

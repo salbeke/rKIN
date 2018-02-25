@@ -1,7 +1,7 @@
 Package: rKIN
 Type: Package
 Title: (Kernel) Isotope Niche Estimation
-Version: 0.1
+Version: 0.2
 Date: 2017-01-16
 URL: http://github.com/salbeke/rKIN
 BugReports: http://github.com/salbeke/rKIN/issues
@@ -12,7 +12,9 @@ Imports:
     ggplot2,
     MASS,
     sp,
-    rgeos
+    rgeos,
+    ks, 
+    RColorBrewer
 Authors@R: person("Shannon E", "Albeke", email = "salbeke@uwyo.edu",
     role=c("aut","cre"))
 Maintainer: Shannon E Albeke <salbeke@uwyo.edu>
@@ -25,7 +27,7 @@ Description: Applies methods used to estimate animal homerange, but
     contours) and plotting capabilities.
 License: GPL (>= 3)
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Suggests: knitr,
     rmarkdown,
     testthat

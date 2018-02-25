@@ -21,4 +21,3 @@ kernel density estimate.
 \author{
 Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 }
-

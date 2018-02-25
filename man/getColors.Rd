@@ -21,4 +21,3 @@ This is run within the function plotKIN()
 \author{
 Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 }
-

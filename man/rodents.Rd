@@ -23,4 +23,3 @@ A dataset containing the individual Species, Habitat sampled,
  and Percent delta C and N.
 }
 \keyword{datasets}
-

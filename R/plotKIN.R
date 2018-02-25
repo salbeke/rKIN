@@ -29,7 +29,7 @@
 #'          xlab = expression({delta}^13*C~ ('\u2030')),
 #'          ylab = expression({delta}^15*N~ ('\u2030')))
 
-plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab = "y", xmin = NULL, xmax = NULL, ymin = NULL, ymax = NULL){
+plotKIN<- function(estObj, scaler = 1, alpha = 0.5, title = "", xlab = "x", ylab = "y", xmin = NULL, xmax = NULL, ymin = NULL, ymax = NULL){
   requireNamespace("maptools")
   #requireNamespace("rgeos")
   #library(maptools)
@@ -85,6 +85,11 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
     gdf$Group_ConfInt<- paste(gdf$Group, gdf$ConfInt, sep = "_")
     df<- c(df, list(gdf))
   }# close i loop
+
+  if(length(df) > 6)
+    stop("You have more than 6 Groups, this is quite a few and plotKIN will currently fail with that many due
+         to the number of discernable color pallettes. Perhaps try reducing your data to fewer groups?")
+
   #loop through the input points
   pts<- list()
   for(i in 1:length(estObj$estInput)){
@@ -104,11 +109,10 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
   ifelse(is.null(ymax) & !is.numeric(ymax), ymax <- (max(ys) + scaler), ymax)
 
 
-
   # make a plot using ggplot2
   kin.plot<- ggplot2::ggplot() +
     lapply(df, function(x) ggplot2::geom_polygon(data = x, alpha = alpha, ggplot2::aes_string(x = "long", y = "lat", fill = "Group_ConfInt", group = "group"))) +
-    ggplot2::scale_fill_manual(values=getColors(length(df), length(ord))) +
+    ggplot2::scale_fill_manual(values = getColors(length(df), length(ord))) +
     #ggplot2::geom_point(data = pts, aes_string(x = names(pts)[3], y = names(pts)[4], colour = "Group", shape = "Group")) +
     lapply(pts, function(x) ggplot2::geom_point(data = x, ggplot2::aes_string(x = names(x)[3], y = names(x)[4], colour = "Group", shape = "Group"))) +
     ggplot2::scale_color_manual(values = getColors(length(df), 1)) +
@@ -121,7 +125,7 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
     ggplot2::theme(panel.background = ggplot2::element_blank(),
           panel.grid.major = ggplot2::element_blank(),
           panel.grid.minor = ggplot2::element_blank(),
-          panel.border= ggplot2::element_rect(fill = NA, color = "black"),
+          panel.border = ggplot2::element_rect(fill = NA, color = "black"),
           plot.title = element_text(hjust = 0.5))
   # return the plot
   return(kin.plot)

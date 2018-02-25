@@ -24,4 +24,3 @@ The hole is determined using the gContainsProper() function from rgeos package. 
 \author{
 Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 }
-

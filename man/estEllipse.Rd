@@ -38,4 +38,3 @@ plotKIN(test.elp, scaler=2, title="Ellipse Estimates", xlab="Ave_C", ylab="Ave_N
 \author{
 Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 }
-

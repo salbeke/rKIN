@@ -38,4 +38,3 @@ plotKIN(test.mcp, scaler=2, title="Minimum Convex Hull Estimates", xlab="Ave_C",
 \author{
 Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 }
-

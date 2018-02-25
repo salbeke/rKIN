@@ -27,4 +27,3 @@ dat.olp<- calcOverlap(test.kin)
 \author{
 Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 }
-

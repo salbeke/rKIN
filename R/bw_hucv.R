@@ -14,7 +14,7 @@
 #' bw_hucv(as.matrix(spec1[, c("Ave_C", "Ave_N")]))
 
 
-bw_hnm<- function(x){
+bw_hucv<- function(x){
   if(!inherits(x, "matrix"))
     stop("x must be a 2-d numeric matrix")
   if(!is.numeric(x))

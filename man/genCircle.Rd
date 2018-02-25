@@ -21,4 +21,3 @@ This function was directly borrowed from SIBER package (Intended for
 generating various SIBER ellipses).It is not intended 
 for direct calling. NB not an exported function.
 }
-

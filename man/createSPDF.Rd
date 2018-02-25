@@ -15,4 +15,3 @@ Create empty SpatialPolygonsDataFrame with estObj schema
 \author{
 Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 }
-

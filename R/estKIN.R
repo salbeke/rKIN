@@ -87,18 +87,57 @@ estKIN <- function(data, x, y, h = "hpi", hval = NULL, group, levels = c(50, 75,
   spts.list<- list()
   for(g in 1:length(grp)){
     # Test for the number of samples. If too small, kick an error
-    if(nrow(data[data[,group]==grp[g] , ]) < 10 & smallSamp == FALSE)
+    if(nrow(data[data[, group] == grp[g] , ]) < 10 & smallSamp == FALSE)
       stop(paste("It appears that group ", grp[g], " has fewer than 10 samples. Please remove group ", grp[g], " from the data.frame."))
-    if(nrow(data[data[,group]==grp[g] , ]) < 3 & smallSamp == TRUE)
+    if(nrow(data[data[, group] == grp[g] , ]) < 3 & smallSamp == TRUE)
       stop(paste("It appears that group ", grp[g], " has fewer than 3 samples. Please remove group ", grp[g], " from the data.frame."))
+    # Determine the bandwidth using either provided vector or the chosen estimator method
+    if(is.null(hval)){
+      # Determine the bandwidth given user selected option
+      if(h == "hns"){
+        # The kde2d function scales the band width by a value of 4, adjusting ks methods to same scale
+        band <- (bw_hns(as.matrix(data[data[, group] == grp[g], c(x, y)]))) * 4
+      }
+      if(h == "hpi"){
+        # The kde2d function scales the band width by a value of 4, adjusting ks methods to same scale
+        band <- (bw_hpi(as.matrix(data[data[, group] == grp[g], c(x, y)]))) * 4
+      }
+      if(h == "hscv"){
+        # The kde2d function scales the band width by a value of 4, adjusting ks methods to same scale
+        band <- (bw_hscv(as.matrix(data[data[, group] == grp[g], c(x, y)]))) * 4
+      }
+      if(h == "hlscv"){
+        # The kde2d function scales the band width by a value of 4, adjusting ks methods to same scale
+        band <- (bw_hlscv(as.matrix(data[data[, group] == grp[g], c(x, y)]))) * 4
+      }
+      if(h == "hbcv"){
+        # The kde2d function scales the band width by a value of 4, adjusting ks methods to same scale
+        band <- (bw_hbcv(as.matrix(data[data[, group] == grp[g], c(x, y)]))) * 4
+      }
+      if(h == "hnm"){
+        # The kde2d function scales the band width by a value of 4, adjusting ks methods to same scale
+        band <- (bw_hnm(as.matrix(data[data[, group] == grp[g], c(x, y)]))) * 4
+      }
+      if(h == "hucv"){
+        # The kde2d function scales the band width by a value of 4, adjusting ks methods to same scale
+        band <- (bw_hucv(as.matrix(data[data[, group] == grp[g], c(x, y)]))) * 4
+      }
+      if(h == "ref"){
+        band <- (bw_ref(as.matrix(data[data[, group] == grp[g], c(x, y)]))) * 4
+      }
+    } else{
+      # User provided bandwidth
+      band <- hval
+    }
+
     #Estimate 2D kernel of isotope space
     kde<- MASS::kde2d(x = data[data[,group]==grp[g] , x], y = data[data[,group]==grp[g] , y],
-                      n = c(length(grid.x), length(grid.y)),
+                      n = c(length(grid.x), length(grid.y)), h = band,
                       lims = c(min(grid.x), max(grid.x), min(grid.y), max(grid.y)))
     # Must determine quantile thresholds given input levels, default is 50%, 75%, 95%. This is using helper function
     rq<- getKernelThreshold(kde$z, levels)
 
-    df.g<- data[data[,group]==grp[g] , ]
+    df.g<- data[data[, group] == grp[g] , ]
     # create the spatial points data.frame
     # populate the points into the spdf
     spts.tmp<- sp::SpatialPointsDataFrame(coords = df.g[ , c(x, y)],

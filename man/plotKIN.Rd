@@ -4,7 +4,7 @@
 \alias{plotKIN}
 \title{Plotting function for rKIN polygons}
 \usage{
-plotKIN(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x",
+plotKIN(estObj, scaler = 1, alpha = 0.5, title = "", xlab = "x",
   ylab = "y", xmin = NULL, xmax = NULL, ymin = NULL, ymax = NULL)
 }
 \arguments{

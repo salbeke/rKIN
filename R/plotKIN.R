@@ -29,7 +29,7 @@
 #'          xlab = expression({delta}^13*C~ ('\u2030')),
 #'          ylab = expression({delta}^15*N~ ('\u2030')))
 
-plotKIN<- function(estObj, scaler = 1, alpha = 0.5, title = "", xlab = "x", ylab = "y", xmin = NULL, xmax = NULL, ymin = NULL, ymax = NULL){
+plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab = "y", xmin = NULL, xmax = NULL, ymin = NULL, ymax = NULL){
   requireNamespace("maptools")
   #requireNamespace("rgeos")
   #library(maptools)

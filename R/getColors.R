@@ -21,20 +21,20 @@ getColors<- function(groups, levels){
     black<- RColorBrewer::brewer.pal(3, "Greys")[3]
   }
   if(levels == 2){
-    orange<- RColorBrewer::brewer.pal(3, "Oranges")[c(1, 3)]
-    purple<- RColorBrewer::brewer.pal(3, "Purples")[c(1, 3)]
-    green<- RColorBrewer::brewer.pal(3, "Greens")[1:2]
-    red<- RColorBrewer::brewer.pal(3, "Reds")[1:2]
-    blue<- RColorBrewer::brewer.pal(3, "Blues")[1:2]
-    black<- RColorBrewer::brewer.pal(3, "Greys")[1:2]
+    orange<- rev(RColorBrewer::brewer.pal(3, "Oranges")[c(1, 3)])
+    purple<- rev(RColorBrewer::brewer.pal(3, "Purples")[c(1, 3)])
+    green<- rev(RColorBrewer::brewer.pal(3, "Greens")[c(1, 3)])
+    red<- rev(RColorBrewer::brewer.pal(3, "Reds")[c(1, 3)])
+    blue<- rev(RColorBrewer::brewer.pal(3, "Blues")[c(1, 3)])
+    black<- rev(RColorBrewer::brewer.pal(3, "Greys")[c(1, 3)])
   }
   if(levels > 2){
-    orange<- RColorBrewer::brewer.pal(levels, "Oranges")
-    purple<- RColorBrewer::brewer.pal(levels, "Purples")
-    green<- RColorBrewer::brewer.pal(levels, "Greens")
-    red<- RColorBrewer::brewer.pal(levels, "Reds")
-    blue<- RColorBrewer::brewer.pal(levels, "Blues")
-    black<- RColorBrewer::brewer.pal(levels, "Greys")
+    orange<- rev(RColorBrewer::brewer.pal(levels, "Oranges"))
+    purple<- rev(RColorBrewer::brewer.pal(levels, "Purples"))
+    green<- rev(RColorBrewer::brewer.pal(levels, "Greens"))
+    red<- rev(RColorBrewer::brewer.pal(levels, "Reds"))
+    blue<- rev(RColorBrewer::brewer.pal(levels, "Blues"))
+    black<- rev(RColorBrewer::brewer.pal(levels, "Greys"))
   }
 
   #orange<- c("#8c2d04", "#d94801", "#f16913", "#fd8d3c", "#fdae6b", "#fdd0a2", "#feedde")

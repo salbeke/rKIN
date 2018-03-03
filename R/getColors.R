@@ -43,7 +43,7 @@ getColors<- function(groups, levels){
   #red<- c("#99000d", "#cb181d", "#ef3b2c", "#fb6a4a", "#fc9272", "#fcbba1", "#fee5d9")
   #blue<- c("#084594", "#2171b5", "#4292c6", "#6baed6", "#9ecae1", "#c6dbef", "#eff3ff")
   #black<- c("#252525", "#525252", "#737373", "#969696", "#bdbdbd", "#d9d9d9", "#f7f7f7")
-  colorList<- list(orange, purple, green, red, blue, black)
+  colorList<- list(orange, purple, green, red, blue, black, orange, purple, green, red, blue, black)
   #create vector to hold ordered colors
   fill<- character()
   for(i in 1:groups){

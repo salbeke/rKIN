@@ -7,13 +7,13 @@ URL: http://github.com/salbeke/rKIN
 BugReports: http://github.com/salbeke/rKIN/issues
 Depends:
     R (>= 2.10),
-    maptools
+    maptools,
+    ks
 Imports:
     ggplot2,
     MASS,
     sp,
     rgeos,
-    ks, 
     RColorBrewer
 Authors@R: person("Shannon E", "Albeke", email = "salbeke@uwyo.edu",
     role=c("aut","cre"))

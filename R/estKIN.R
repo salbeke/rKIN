@@ -6,7 +6,7 @@
 #' @param data data.frame object containing columns of isotopic values and grouping variables
 #' @param x character giving the column name of the x coordinates
 #' @param y character giving the column name of the y coordinates
-#' @param h character decribing the bandwidth estimator method. Default = "hpi". See Details for more information.
+#' @param h character decribing the bandwidth estimator method. Default = "ref". See Details for more information.
 #' @param hval numeric vector of length 2 describing the bandwidth in x and y directions. Default = NULL
 #' @param group character giving the column name of the grouping variable (i.e. species)
 #' @param levels Numeric vector of desired percent levels (e.g. c(10, 50, 90). Should not be less than 1 or greater than 99)
@@ -41,7 +41,7 @@
 #' plotKIN(test.kin, scaler=2, title="Kernel Estimates", xlab="Ave_C", ylab="Ave_N")
 
 
-estKIN <- function(data, x, y, h = "hpi", hval = NULL, group, levels = c(50, 75, 95), scaler = 10, smallSamp = FALSE){
+estKIN <- function(data, x, y, h = "ref", hval = NULL, group, levels = c(50, 75, 95), scaler = 10, smallSamp = FALSE){
   # need to perform some class testing first before running any below code
   if(!inherits(data, "data.frame"))
     stop("data must be a data.frame!")

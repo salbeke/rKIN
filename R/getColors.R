@@ -28,7 +28,15 @@ getColors<- function(groups, levels){
     blue<- rev(RColorBrewer::brewer.pal(3, "Blues")[c(1, 3)])
     black<- rev(RColorBrewer::brewer.pal(3, "Greys")[c(1, 3)])
   }
-  if(levels > 2){
+  if(levels == 3){
+    orange<- rev(RColorBrewer::brewer.pal(4, "Oranges")[c(2:4)])
+    purple<- rev(RColorBrewer::brewer.pal(4, "Purples")[c(2:4)])
+    green<- rev(RColorBrewer::brewer.pal(4, "Greens")[c(2:4)])
+    red<- rev(RColorBrewer::brewer.pal(4, "Reds")[c(2:4)])
+    blue<- rev(RColorBrewer::brewer.pal(4, "Blues")[c(2:4)])
+    black<- rev(RColorBrewer::brewer.pal(4, "Greys")[c(2:4)])
+  }
+  if(levels > 3){
     orange<- rev(RColorBrewer::brewer.pal(levels, "Oranges"))
     purple<- rev(RColorBrewer::brewer.pal(levels, "Purples"))
     green<- rev(RColorBrewer::brewer.pal(levels, "Greens"))

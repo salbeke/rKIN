@@ -4,8 +4,17 @@
 \alias{estKIN}
 \title{Estimate Kernel Isotope Niche}
 \usage{
-estKIN(data, x, y, h = "hpi", hval = NULL, group, levels = c(50, 75, 95),
-  scaler = 10, smallSamp = FALSE)
+estKIN(
+  data,
+  x,
+  y,
+  h = "ref",
+  hval = NULL,
+  group,
+  levels = c(50, 75, 95),
+  scaler = 10,
+  smallSamp = FALSE
+)
 }
 \arguments{
 \item{data}{data.frame object containing columns of isotopic values and grouping variables}
@@ -14,7 +23,7 @@ estKIN(data, x, y, h = "hpi", hval = NULL, group, levels = c(50, 75, 95),
 
 \item{y}{character giving the column name of the y coordinates}
 
-\item{h}{character decribing the bandwidth estimator method. Default = "hpi". See Details for more information.}
+\item{h}{character describing the bandwidth estimator method. Default = "ref". See Details for more information.}
 
 \item{hval}{numeric vector of length 2 describing the bandwidth in x and y directions. Default = NULL}
 

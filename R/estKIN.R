@@ -6,7 +6,7 @@
 #' @param data data.frame object containing columns of isotopic values and grouping variables
 #' @param x character giving the column name of the x coordinates
 #' @param y character giving the column name of the y coordinates
-#' @param h character decribing the bandwidth estimator method. Default = "ref". See Details for more information.
+#' @param h character describing the bandwidth estimator method. Default = "ref". See Details for more information.
 #' @param hval numeric vector of length 2 describing the bandwidth in x and y directions. Default = NULL
 #' @param group character giving the column name of the grouping variable (i.e. species)
 #' @param levels Numeric vector of desired percent levels (e.g. c(10, 50, 90). Should not be less than 1 or greater than 99)
@@ -31,6 +31,7 @@
 #' @return A class rKIN object containing a list of SpatialPolygonsDataFrame, each list item representing the grouping variable.
 #' @author Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 #' @export
+#' @import ks
 #' @examples
 #' library(rKIN)
 #' data("rodents")

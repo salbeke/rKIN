@@ -3,7 +3,6 @@
 \docType{package}
 \name{rKIN}
 \alias{rKIN}
-\alias{rKIN-package}
 \title{rKIN: A package for computating isotopic niche space}
 \description{
 The rKIN This package applies methods used to estimate animal homerange, but

@@ -4,3 +4,5 @@
 ^README-.*\.png$
 ^NEWS\.md$
 
+^CRAN-SUBMISSION$
+^cran-comments\.md$

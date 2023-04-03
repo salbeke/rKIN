@@ -42,7 +42,7 @@ kin.area
 kin.olp<- calcOverlap(test.kin)
 kin.olp
 # plot the kernel estimates
-plotKIN(test.kin, title="Test Kernel UD", x="Ave_C", y="Ave_N")
+plotKIN(test.kin, title="Test Kernel UD", xlab="Ave_C", ylab="Ave_N")
 ```
 
 ## Example: Bivariate Ellipse
@@ -69,7 +69,7 @@ elp.area
 elp.olp<- calcOverlap(test.elp)
 elp.olp
 # plot the kernel estimates
-plotKIN(test.elp, title="Test Bivariate Ellipse", x="Ave_C", y="Ave_N")
+plotKIN(test.elp, title="Test Bivariate Ellipse", xlab="Ave_C", ylab="Ave_N")
 ```
 
 ## Example: Minimum Convex Polygon (MCP)
@@ -96,7 +96,7 @@ mcp.area
 mcp.olp<- calcOverlap(test.mcp)
 mcp.olp
 # plot the mcp estimates
-plotKIN(test.mcp, title="Test Minimum Convex Polygons", x="Ave_C", y="Ave_N")
+plotKIN(test.mcp, title="Test Minimum Convex Polygons", xlab="Ave_C", ylab="Ave_N")
 ```
 ## Compare the areas between methods
 ```

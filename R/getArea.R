@@ -15,7 +15,7 @@
 #' kin.area<- getArea(test.kin)
 
 getArea<- function(estObj){
-  if(!any(names(estObj)) == "estObj")
+  if(!any(names(estObj) == "estObj"))
     stop("estObj must be of class estObj created from estEllipse, estKIN, or estMCP functions!")
 
   #outDF<- data.frame()

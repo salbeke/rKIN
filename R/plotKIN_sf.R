@@ -140,8 +140,8 @@ plotKIN_sf<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", y
   kin.plot <- ggplot2::ggplot() +
     ggplot2::geom_sf(data = estObj$estObj[order(estObj$estObj$ConfInt, decreasing = TRUE),], ggplot2::aes(fill = Group_ConfInt, group = "ShapeArea"), color = "transparent", alpha = 0.3, size = 10) +
     ggplot2::scale_fill_manual(values = getColors(grps, lvls)) +
-    ggplot2::geom_sf(data = estObj$estInput, aes(color = Group, shape = Group)) +
-    ggplot2::scale_color_manual(values = getColors(sfgrps, 1)) +
+    ggplot2::geom_sf(data = estObj$estInput, ggplot2::aes(color = Group, shape = Group)) +
+    ggplot2::scale_color_manual(values = getColors(grps, 1)) +
     ggplot2::coord_sf(xlim = c(xmin, xmax), ylim = c(ymin, ymax)) +
     ggplot2::scale_x_continuous(breaks = seq(from = round(xmin), to = round(xmax), by = scaler)) +
     ggplot2::scale_y_continuous(breaks = seq(from = round(ymin), to = round(ymax), by = scaler)) +

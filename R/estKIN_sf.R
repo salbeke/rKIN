@@ -153,13 +153,13 @@ estKIN_sf <- function(data, x, y, h = "ref", hval = NULL, group, levels = c(50, 
       cLstack <- tapply(1:length(cL), sapply(cL, function(x) x[[1]]),
                         function(x) x, simplify = FALSE)
 
-      df <- data.frame(ConfInt = levels[lev])
+      #df <- data.frame(ConfInt = levels[lev])
 
       m <- length(cLstack)
 
       res <- vector(mode = "list", length = m)
-      IDs <- paste("C", 1:m, sep = "_")
-      row.names(df) <- IDs
+      #IDs <- paste("C", 1:m, sep = "_")
+      #row.names(df) <- IDs
 
       res <- sf::st_sfc(.contourLines2LineList_sf(cL))
 
@@ -179,6 +179,7 @@ estKIN_sf <- function(data, x, y, h = "ref", hval = NULL, group, levels = c(50, 
       # plot(innerTriangle_sf)
 
       #res <- c(res, triangle_sf, innerTriangle_sf, triangle_sf2)
+
       if (length(res) > 1) {
         # find all the outer polygons containing other polygons
         testContains <- sf::st_contains_properly(res)
@@ -190,12 +191,12 @@ estKIN_sf <- function(data, x, y, h = "ref", hval = NULL, group, levels = c(50, 
           # erase represents the inner polygon we want to remove
           erase <- sf::st_union(res[unlist(testContains[nonemptyIndex])])
           # erased should be the outer polygon without the inners
-          erased <- sf::st_difference(res, erase)
+          res <- sf::st_difference(res, erase)
         }
       }
 
       ## Union erased together to smash into sf object that will be sent for CI and group
-      outerPolys <- sf::st_union(erased)
+      outerPolys <- sf::st_union(res)
 
       sfObj <- sf::st_as_sf(cbind(data.frame(Method = "Kernel", Group = grp[g], ConfInt = levels[lev], ShapeArea = NA_real_), outerPolys))
       # Not accessing the specific geometry column is this okay?

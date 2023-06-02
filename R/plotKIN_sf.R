@@ -151,7 +151,7 @@ plotKIN_sf<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", y
                    panel.grid.major = ggplot2::element_blank(),
                    panel.grid.minor = ggplot2::element_blank(),
                    panel.border = ggplot2::element_rect(fill = NA, color = "black"),
-                   plot.title = element_text(hjust = 0.5),
+                   plot.title = ggplot2::element_text(hjust = 0.5),
                    aspect.ratio = 1.0)
   # return the plot
   return(kin.plot)

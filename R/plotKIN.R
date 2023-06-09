@@ -29,7 +29,7 @@
 #'          xlab = expression({delta}^13*C~ ('\u2030')),
 #'          ylab = expression({delta}^15*N~ ('\u2030')))
 
-plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab = "y", xmin = NULL, xmax = NULL, ymin = NULL, ymax = NULL){
+plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab = "y", xmin = NULL, xmax = NULL, ymin = NULL, ymax = NULL, colors = NULL){
   requireNamespace("maptools")
   #requireNamespace("rgeos")
   #library(maptools)
@@ -78,9 +78,10 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
   # Get the points for the bounding box
   groupVars <- unique(estObj$estObj$Group)
 
-  if(length(groupVars) > 6)
-    stop("You have more than 6 Groups, this is quite a few and plotKIN will currently fail with that many due
-         to the number of discernable color pallettes. Perhaps try reducing your data to fewer groups?")
+  # if(length(groupVars) > 6)
+  #   stop("You have more than 6 Groups, this is quite a few and plotKIN will currently fail with that many due
+  #        to the number of discernable color pallettes. Perhaps try reducing your data to fewer groups?")
+
 
   for (i in 1:length(groupVars))
   {
@@ -155,12 +156,20 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
 
   grps <- length(unique(estObj$estObj$Group))
   lvls <- length(unique(estObj$estObj$ConfInt))
-
+  myColors <- unlist(getColors(grps, lvls, colors))
+  baseColors <- character()
+  j <- 1
+  for (i in 1:grps) {
+    baseColors <- c(baseColors, myColors[j])
+    j <- j + lvls
+  }
   kin.plot <- ggplot2::ggplot() +
     ggplot2::geom_sf(data = estObj$estObj[order(estObj$estObj$ConfInt, decreasing = TRUE),], ggplot2::aes(fill = Group_ConfInt, group = "ShapeArea"), color = "transparent", alpha = 0.3, size = 10) +
-    ggplot2::scale_fill_manual(values = getColors(grps, lvls)) +
+    # This is for coloring polygons
+    ggplot2::scale_fill_manual(values = myColors) +
     ggplot2::geom_sf(data = estObj$estInput, ggplot2::aes(color = Group, shape = Group)) +
-    ggplot2::scale_color_manual(values = getColors(grps, 1)) +
+    # This is for coloring data points
+    ggplot2::scale_color_manual(values = baseColors) +
     ggplot2::coord_sf(xlim = c(xmin, xmax), ylim = c(ymin, ymax)) +
     ggplot2::scale_x_continuous(breaks = seq(from = round(xmin), to = round(xmax), by = scaler)) +
     ggplot2::scale_y_continuous(breaks = seq(from = round(ymin), to = round(ymax), by = scaler)) +
@@ -173,6 +182,10 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
                    plot.title = ggplot2::element_text(hjust = 0.5),
                    aspect.ratio = 1.0)
   # return the plot
+
+  if (grps > 6) {
+    kin.plot <- kin.plot + ggplot2::theme(legend.key.size = ggplot2::unit(0.3, 'cm'))
+  }
   return(kin.plot)
 
 }# close function

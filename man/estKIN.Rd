@@ -36,11 +36,11 @@ estKIN(
 \item{smallSamp}{logical value indicating whether to override minimum number of samples. Currently 10 samples are required.}
 }
 \value{
-A class rKIN object containing a list of SpatialPolygonsDataFrame, each list item representing the grouping variable.
+A class rKIN object containing a list of sf data frames, each list item representing the grouping variable.
 }
 \description{
 Calculates the 2D kernel for isotopic values at multiple confidence levels. Returns a list of
-SpatialPolygonsDataFrame, each list item representing the grouping variable (i.e. species).
+sf data frames, each list item representing the grouping variable (i.e. species).
 }
 \details{
 Details

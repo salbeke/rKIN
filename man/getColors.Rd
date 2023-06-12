@@ -4,12 +4,14 @@
 \alias{getColors}
 \title{Create a list of colors for plotKIN function}
 \usage{
-getColors(groups, levels)
+getColors(groups, levels, colors = NULL)
 }
 \arguments{
 \item{groups}{The number of groups within grouping variable (i.e. species)}
 
 \item{levels}{The number of confidence intervals provided by the user}
+
+\item{colors}{Character vector of hex codes representing desired colors}
 }
 \value{
 A character vector of RGB colors

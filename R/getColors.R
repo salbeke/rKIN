@@ -6,6 +6,7 @@
 #'
 #' @param groups The number of groups within grouping variable (i.e. species)
 #' @param levels The number of confidence intervals provided by the user
+#' @param colors Character vector of hex codes representing desired colors
 #' @return A character vector of RGB colors
 #' @author Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 #//////////////////////////////////////////////////////////

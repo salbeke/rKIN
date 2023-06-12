@@ -1,7 +1,7 @@
 #' Estimate Minimum Convex Polygon (MCP) Isotope Niche
 #'
 #' Calculates the Minimum Convex Polygon for isotopic values at multiple confidence levels. Returns a list of
-#' SpatialPolygonsDataFrame, each list item representing the grouping variable (i.e. species).
+#' sf data frames, each list item representing the grouping variable (i.e. species).
 #'
 #' @param data data.frame object containing columns of isotopic values and grouping variables
 #' @param x character giving the column name of the x coordinates
@@ -9,9 +9,10 @@
 #' @param group character giving the column name of the grouping variable (i.e. species)
 #' @param levels Numeric vector of desired percent levels (e.g. c(10, 50, 90). Should not be less than 1 or greater than 100)
 #' @param smallSamp logical value indicating whether to override minimum number of samples. Currently 10 samples are required.
-#' @return A list of SpatialPolygonsDataFrame, each list item representing the grouping variable.
+#' @return A list of sf data frames, each list item representing the grouping variable.
 #' @author Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 #' @export
+#' @import sf
 #' @examples
 #' library(rKIN)
 #' data("rodents")
@@ -94,7 +95,6 @@ estMCP <- function(data, x, y, group, levels= c(50, 75, 95), smallSamp = FALSE){
     # measure distance of each observation to centroid and append to data.frame
     df.g$Dist <- apply(df.g[ , c(x, y)], 1, FUN = function(p){euc.dist(p, cent)})
     # loop through each level
-    #sf.tmp <- createSPDF_sf()
     for(lev in 1:length(levels)){
       # filter rows which meet MCP level threshold distance from centroid
       df.xy<- df.g[which(df.g$Dist <= stats::quantile(df.g$Dist, levels[lev] / 100)), c(x, y)]

@@ -1,20 +1,21 @@
 Package: rKIN
 Type: Package
 Title: (Kernel) Isotope Niche Estimation
-Version: 0.4.0
-Date: 2023-04-03
+Version: 1.0.0
+Date: 2023-06-12
 URL: https://github.com/salbeke/rKIN
 BugReports: https://github.com/salbeke/rKIN/issues
 Depends:
-    R (>= 2.10),
-    maptools,
-    ks
+    R (>= 3.0),
+    ks,
+    sf
 Imports:
     ggplot2,
     MASS,
-    sp,
-    rgeos,
-    RColorBrewer
+    RColorBrewer,
+    randomcoloR,
+    shades,
+    dplyr
 Authors@R: person("Shannon E", "Albeke", email = "salbeke@uwyo.edu",
     role=c("aut","cre"))
 Maintainer: Shannon E Albeke <salbeke@uwyo.edu>

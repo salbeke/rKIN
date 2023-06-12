@@ -20,11 +20,11 @@ estEllipse(data, x, y, group, levels = c(50, 75, 95), smallSamp = FALSE)
 \item{smallSamp}{logical value indicating whether to override minimum number of samples. Currently 10 samples are required.}
 }
 \value{
-A list of SpatialPolygonsDataFrame, each list item representing the grouping variable.
+A list of sf data frames, each list item representing the grouping variable.
 }
 \description{
 Calculates the Bivariate Normal Ellipse Polygon for isotopic values at multiple confidence levels. Returns a list of
-SpatialPolygonsDataFrame, each list item representing the grouping variable (i.e. species).
+sf data frames, each list item representing the grouping variable (i.e. species).
 }
 \examples{
 library(rKIN)

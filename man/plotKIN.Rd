@@ -14,7 +14,8 @@ plotKIN(
   xmin = NULL,
   xmax = NULL,
   ymin = NULL,
-  ymax = NULL
+  ymax = NULL,
+  colors = NULL
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ plotKIN(
 \item{ymin}{default is NULL, numeric value of user specified minimum y axis value}
 
 \item{ymax}{default is NULL, numeric value of user specified maximum y axis value}
+
+\item{colors}{default is NULL, character vector of hex codes representing colors for plot}
 }
 \value{
 A plot of all groups and levels.

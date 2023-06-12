@@ -2,10 +2,12 @@
 #'
 #' Calcuates the percent of polygon overlap between each group and level.
 #'
-#' @param estObj List object of class estObj containing returned SpatialPolygonDataFrames from estimating functions estKIN, etc.
+#' @param estObj List object of class estObj containing returned sf data frames from estimating functions estKIN, etc.
 #' @return A data.frame containing the percent of the polygon overlap for each group and level. Rows are the 1st input polygon, columns are the 2nd input, the returned area of overlap is devided by the area of the 1st polygon (row).
 #' @author Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 #' @export
+#' @import dplyr
+#' @import sf
 #' @examples
 #' library(rKIN)
 #' data("rodents")
@@ -62,8 +64,8 @@ calcOverlap<- function(estObj){
     # get the level for the chosen group
     #rpoly<- estObj$estObj[[g]][which(estObj$estObj[[g]]@data$ConfInt==nm[i, 2]), ]
     rpoly<- estObj$estObj |>
-      dplyr::filter(Group == nm[i,1]) |>
-      dplyr::filter(ConfInt == nm[i,2])
+      dplyr::filter(.data$Group == nm[i,1]) |>
+      dplyr::filter(.data$ConfInt == nm[i,2])
     # loop through the col polygons and intersect
     for(j in 1:nrow(nm)){
       # gets the group
@@ -72,8 +74,8 @@ calcOverlap<- function(estObj){
       # get the level for the chosen group
       #cpoly<- estObj$estObj[[g.c]][which(estObj$estObj[[g.c]]@data$ConfInt==nm[j, 2]), ]
       cpoly <- estObj$estObj |>
-        dplyr::filter(Group == nm[j,1]) |>
-        dplyr::filter(ConfInt == nm[j,2])
+        dplyr::filter(.data$Group == nm[j,1]) |>
+        dplyr::filter(.data$ConfInt == nm[j,2])
       #g.int<- rgeos::gIntersection(rpoly, cpoly)
 
       sf::st_agr(rpoly) = "constant"

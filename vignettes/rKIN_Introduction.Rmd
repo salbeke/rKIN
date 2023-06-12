@@ -14,7 +14,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 ## rKIN Introduction and Guide
-This user manual introduces the basic functionality of the rKIN package. rKIN applies methods used to estimate animal homerange, but instead of geospatial coordinates, we use isotopic coordinates. The idea is straight forward, use spatial analyses tools in an unprojected space, in this case Isotope Niche space. The creation of this package relies on functions found in [ggplot2](https://CRAN.R-project.org/package=ggplot2), [MASS](https://cran.r-project.org/package=MASS), [raster](https://cran.r-project.org/package=raster), [rgeos](https://cran.r-project.org/package=rgeos) and [sp](https://cran.r-project.org/package=sp) packages (you may also need the 'maptools' package). The estimation methods
+This user manual introduces the basic functionality of the rKIN package. rKIN applies methods used to estimate animal homerange, but instead of geospatial coordinates, we use isotopic coordinates. The idea is straight forward, use spatial analyses tools in an unprojected space, in this case Isotope Niche space. The creation of this package relies on functions found in [ggplot2](https://CRAN.R-project.org/package=ggplot2), [MASS](https://cran.r-project.org/package=MASS), and [sf](https://cran.r-project.org/package=sf) packages. The estimation methods
 include: 1) 2-dimensional bivariate normal kernel utilization density estimator (estKIN), 2) bivariate normal ellipse estimator (estEllipse), and 3) minimum convex polygon estimator (estMCP), all applied to stable isotope data (simply x and y coordinates of the same scale). Additionally, functions to determine niche area (getArea), polygon overlap between groups and levels (confidence contours; calcOverlap) and plotting capabilities (plot.kin).
 
 ## Example: Kernel UD
@@ -22,8 +22,8 @@ The estKIN function uses the following workflow to estimate 2-D Bivariate Normal
 1) Obtain the min/max X and Y values and expand the extent of values by the 'scaler'. These values are then used to create a lattice/matrix of points for which the kernel will be estimated to.
 2) Using MASS::kde2d and the default bandwidth, fit the kernel to each 'group' individually.
 3) For each 'group', obtain the threshold values for each 'level' and extract the contourlines. 
-4) Convert the Lines to a SpatialPolygonsDataFrame (sp package) and attribute with ShapeArea
-5) Function returns an object of class("estObj"), which is a list of SpatialPolygonsDataFrames, 1 list item for each group.
+4) Convert the Lines to a sf Data Frame (sf package) and attribute with ShapeArea
+5) Function returns an object of class("estObj"), which is a list of sf Data Frames, 1 list item for each group.
 
 Below is an example:
 
@@ -50,8 +50,8 @@ The estEllipse function uses the following workflow to estimate Bivariate Normal
 1) For each 'group', estimate the centroid of the set of points and obtain the covariance of the xy coordinates pairs.
 2) For each 'level', estimate the radius of a circle given the variance and a chi-square cutoff threshold.
 3) Using the genCircle function from [SIBER](https://cran.r-project.org/package=SIBER) package, create the xy coordinate pairs to create the ellipse.
-4) Convert the points to a SpatialPolygonsDataFrame (sp package) and attribute with ShapeArea
-5) Function returns an object of class("estObj"), which is a list of SpatialPolygonsDataFrames, 1 list item for each 'group'.
+4) Convert the points to a sf Data Frame (sf package) and attribute with ShapeArea
+5) Function returns an object of class("estObj"), which is a list of sf Data Frame, 1 list item for each 'group'.
 
 Below is an example:
 
@@ -77,8 +77,8 @@ The estMCP function uses the following workflow to estimate Minimum Convex Polyg
 1) For each 'group', estimate the centroid of the set of points and obtain the covariance of the xy coordinates pairs.
 2) Calculate the distance of each point to the centroid.
 3) Obtain the distance threshold for each 'level' given the quantile values. 
-4) Convert the Points to a SpatialPolygonsDataFrame (sp package) and attribute with ShapeArea.
-5) Function returns an object of class("estObj"), which is a list of SpatialPolygonsDataFrames, 1 list item for each 'group'.
+4) Convert the Points to a sf Data Frame (sf package) and attribute with ShapeArea.
+5) Function returns an object of class("estObj"), which is a list of sf Data Frames, 1 list item for each 'group'.
 
 Below is an example:
 

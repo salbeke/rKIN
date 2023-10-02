@@ -26,8 +26,8 @@
 #'                    levels=c(50, 75, 95), scaler=2)
 #' #determine polygon overlap for all polygons
 #' plotKIN(test.kin, scaler = 1, title = "Kernel Estimates",
-#'          xlab = expression({delta}^13*C~ ('‰')),
-#'          ylab = expression({delta}^15*N~ ('‰')))
+#'          xlab = expression({delta}^13*C~ ('Per Mille')),
+#'          ylab = expression({delta}^15*N~ ('Per Mille')))
 
 plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab = "y", xmin = NULL, xmax = NULL, ymin = NULL, ymax = NULL, colors = NULL){
 

@@ -55,8 +55,8 @@ test.kin<- estKIN(data=rodents, x="Ave_C", y="Ave_N", group="Species",
                    levels=c(50, 75, 95), scaler=2)
 #determine polygon overlap for all polygons
 plotKIN(test.kin, scaler = 1, title = "Kernel Estimates",
-         xlab = expression({delta}^13*C~ ('‰')),
-         ylab = expression({delta}^15*N~ ('‰')))
+         xlab = expression({delta}^13*C~ ('Per Mille')),
+         ylab = expression({delta}^15*N~ ('Per Mille')))
 }
 \author{
 Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming

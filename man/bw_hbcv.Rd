@@ -2,7 +2,7 @@
 % Please edit documentation in R/bw_hbcv.R
 \name{bw_hbcv}
 \alias{bw_hbcv}
-\title{Biased cross-validation bandwitdh matrix selector for bivariate data.}
+\title{Biased cross-validation bandwidth matrix selector for bivariate data.}
 \usage{
 bw_hbcv(x)
 }

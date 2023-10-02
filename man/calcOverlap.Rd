@@ -10,10 +10,10 @@ calcOverlap(estObj)
 \item{estObj}{List object of class estObj containing returned sf data frames from estimating functions estKIN, etc.}
 }
 \value{
-A data.frame containing the percent of the polygon overlap for each group and level. Rows are the 1st input polygon, columns are the 2nd input, the returned area of overlap is devided by the area of the 1st polygon (row).
+A data.frame containing the percent of the polygon overlap for each group and level. Rows are the 1st input polygon, columns are the 2nd input, the returned area of overlap is divided by the area of the 1st polygon (row).
 }
 \description{
-Calcuates the percent of polygon overlap between each group and level.
+Calculates the percent of polygon overlap between each group and level.
 }
 \examples{
 library(rKIN)

@@ -1,4 +1,4 @@
-#' Biased cross-validation bandwitdh matrix selector for bivariate data.
+#' Biased cross-validation bandwidth matrix selector for bivariate data.
 #'
 #' A simple wrapper for the ks::Hbcv function.
 #'

@@ -1,9 +1,9 @@
 #' Calculate Percent Overlap of Isotopic Niche Space
 #'
-#' Calcuates the percent of polygon overlap between each group and level.
+#' Calculates the percent of polygon overlap between each group and level.
 #'
 #' @param estObj List object of class estObj containing returned sf data frames from estimating functions estKIN, etc.
-#' @return A data.frame containing the percent of the polygon overlap for each group and level. Rows are the 1st input polygon, columns are the 2nd input, the returned area of overlap is devided by the area of the 1st polygon (row).
+#' @return A data.frame containing the percent of the polygon overlap for each group and level. Rows are the 1st input polygon, columns are the 2nd input, the returned area of overlap is divided by the area of the 1st polygon (row).
 #' @author Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming
 #' @export
 #' @import dplyr

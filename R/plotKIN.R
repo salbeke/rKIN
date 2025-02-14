@@ -110,7 +110,7 @@ plotKIN<- function(estObj, scaler = 1, alpha = 0.3, title = "", xlab = "x", ylab
     j <- j + lvls
   }
   kin.plot <- ggplot2::ggplot() +
-    ggplot2::geom_sf(data = estObj$estObj[order(estObj$estObj$ConfInt, decreasing = TRUE),], ggplot2::aes(fill = .data$Group_ConfInt, group = "ShapeArea"), color = "transparent", alpha = 0.3, size = 10) +
+    ggplot2::geom_sf(data = estObj$estObj[order(estObj$estObj$ConfInt, decreasing = TRUE),], ggplot2::aes(fill = .data$Group_ConfInt, group = "ShapeArea"), color = "transparent", alpha = alpha, size = 10) +
     # This is for coloring polygons
     ggplot2::scale_fill_manual(values = myColors) +
     ggplot2::geom_sf(data = estObj$estInput, ggplot2::aes(color = .data$Group, shape = .data$Group)) +

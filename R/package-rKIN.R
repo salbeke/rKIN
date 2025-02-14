@@ -15,4 +15,5 @@
 #'
 #' @docType package
 #' @name rKIN
+#' @aliases rKIN-package
 NULL

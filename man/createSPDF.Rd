@@ -7,10 +7,10 @@
 createSPDF()
 }
 \value{
-An empty SpatialPolygonsDataFrame object matching the expected schema of the estKIN function.
+An empty sf data frame object matching the expected schema of the estKIN function.
 }
 \description{
-Create empty SpatialPolygonsDataFrame with estObj schema
+Create empty sf data frame with estObj schema
 }
 \author{
 Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming

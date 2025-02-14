@@ -14,7 +14,8 @@ plotKIN(
   xmin = NULL,
   xmax = NULL,
   ymin = NULL,
-  ymax = NULL
+  ymax = NULL,
+  colors = NULL
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ plotKIN(
 \item{ymin}{default is NULL, numeric value of user specified minimum y axis value}
 
 \item{ymax}{default is NULL, numeric value of user specified maximum y axis value}
+
+\item{colors}{default is NULL, character vector of hex codes representing colors for plot}
 }
 \value{
 A plot of all groups and levels.
@@ -52,8 +55,8 @@ test.kin<- estKIN(data=rodents, x="Ave_C", y="Ave_N", group="Species",
                    levels=c(50, 75, 95), scaler=2)
 #determine polygon overlap for all polygons
 plotKIN(test.kin, scaler = 1, title = "Kernel Estimates",
-         xlab = expression({delta}^13*C~ ('\u2030')),
-         ylab = expression({delta}^15*N~ ('\u2030')))
+         xlab = expression({delta}^13*C~ ('Per Mille')),
+         ylab = expression({delta}^15*N~ ('Per Mille')))
 }
 \author{
 Shannon E. Albeke, Wyoming Geographic Information Science Center, University of Wyoming

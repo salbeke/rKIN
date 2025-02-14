@@ -15,9 +15,9 @@ genCircle(n = 100, r)
 A 2 x n matrix of x and y coordinates of points on a circle.
 }
 \description{
-This is a helper function that creates a sequence of points on a circle of 
-radius \code{r} as a resolution determined by \code{n}. 
+This is a helper function that creates a sequence of points on a circle of
+radius \code{r} as a resolution determined by \code{n}.
 This function was directly borrowed from SIBER package (Intended for
-generating various SIBER ellipses).It is not intended 
+generating various SIBER ellipses).It is not intended
 for direct calling. NB not an exported function.
 }

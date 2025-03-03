@@ -35,7 +35,11 @@ getColors<- function(groups, levels, colors = NULL){
     colorList <- colors
     if (levels > 1 ) {
       for (i in 1:length(colorList)) {
+<<<<<<< HEAD
         indivLevels <- character()
+=======
+        #indivLevels <- character()
+>>>>>>> development
         indivLevels <- colorList[i]
         for (j in 2:levels) {
           indivLevels <- c(indivLevels, shades::brightness(indivLevels[j-1], 0.5))
@@ -48,8 +52,12 @@ getColors<- function(groups, levels, colors = NULL){
     }
 
   }
+<<<<<<< HEAD
 
   if (groups > 6) {
+=======
+  else if (groups > 6) {
+>>>>>>> development
     # use rcolorbrewer colors for up to 6 then use random colors
     orange<- RColorBrewer::brewer.pal(3, "Oranges")[3]
     purple<- RColorBrewer::brewer.pal(3, "Purples")[3]
@@ -124,6 +132,7 @@ getColors<- function(groups, levels, colors = NULL){
     #red<- c("#99000d", "#cb181d", "#ef3b2c", "#fb6a4a", "#fc9272", "#fcbba1", "#fee5d9")
     #blue<- c("#084594", "#2171b5", "#4292c6", "#6baed6", "#9ecae1", "#c6dbef", "#eff3ff")
     #black<- c("#252525", "#525252", "#737373", "#969696", "#bdbdbd", "#d9d9d9", "#f7f7f7")
+<<<<<<< HEAD
     colorList<- list(orange, purple, green, red, blue, black, orange, purple, green, red, blue, black)
 
     #create vector to hold ordered colors
@@ -131,14 +140,26 @@ getColors<- function(groups, levels, colors = NULL){
     for(i in 1:groups){
       fill<- c(fill, colorList[[i]])
       # fill<- c(fill, colorList[[i]][1:levels])
+=======
+    #colorList<- list(orange, purple, green, red, blue, black, orange, purple, green, red, blue, black)
+    colorList<- list(orange, purple, green, red, blue, black)
+
+    #create vector to hold ordered colors
+
+    for (i in 1:groups) {
+      fill <- c(fill, colorList[[i]][1:levels]) # Select the first 'levels' colors.
+>>>>>>> development
     }
   }
 
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> development
   # Need to create a for loop that takes in indiviudal colors and increases brightness,
   # Then need to take increased brightness, and also increase that color for all levels
   #brightness(myColors, 0.9)

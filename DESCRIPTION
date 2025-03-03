@@ -1,8 +1,13 @@
 Package: rKIN
 Type: Package
 Title: (Kernel) Isotope Niche Estimation
+<<<<<<< HEAD
 Version: 1.0.3
 Date: 2025-02-14
+=======
+Version: 1.0.4
+Date: 2025-03-03
+>>>>>>> development
 URL: https://github.com/salbeke/rKIN
 BugReports: https://github.com/salbeke/rKIN/issues
 Depends:
